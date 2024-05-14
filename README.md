@@ -20,9 +20,9 @@ The sim directory contains 5 files:
 - `job`
 
 ### generation scripts
-After creating the new sim folder, we can start a simulation by running `path/to/mg5/bin/mg5_aMC generate.sh`. If we want to include electroweak corrections we run `path/to/mg5/bin/mg5_aMC generate_eW.sh`.
+After creating the new sim folder, you can start a simulation by running `path/to/mg5/bin/mg5_aMC generate.sh`. If we want to include electroweak corrections we run `path/to/mg5/bin/mg5_aMC generate_eW.sh`.
 
-#### HPC
+#### HPC job
 If you are running on a HPC cluster using TORQUE, you can run simulations by submitting the job file with `qsub job`. 
 
 ## Process Data
