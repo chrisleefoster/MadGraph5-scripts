@@ -3,11 +3,11 @@ This project describes my workflow for producing the NLO/LO cross sections and d
 
 ![Workflow flowchart](images/mg5-flowchart.png)
 
-See my [setup guide](https://github.com/chrisleefoster/MadGraph5-setup) for installation, tutorial, and directory setup. This guide assumes you are using the setup described there.   
+See my [setup guide (work-in-progress)](https://github.com/chrisleefoster/MadGraph5-setup) for installation, tutorial, and directory setup. This guide assumes you are using the setup described there.
 
 
 ## Creating Data
-Once mg5 is installed and setup, we can start running simulations. 
+Once mg5 is installed and setup, you can start simulating particle collisions. 
 
 ### createSim.sh
 Running `ttbarW.sh`(soon to be createSim.sh) will copy the sim directory in `sim.tar.gz` and rename it to ttbarW-date-number, where date is today's date in YYYY_MM_DD and number increases for each sim created on the same day. 
