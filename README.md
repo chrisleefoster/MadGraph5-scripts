@@ -1,16 +1,15 @@
 # MadGraph5-scripts   
-This project describes my workflow for producing the NLO/LO cross sections and distributions seen in [my first paper](https://arxiv.org/abs/2312.00861). Below is a flow chart of my workflow.
+MadGraph5 scripts offers various scripts aiding in the automation of [MadGraph5_aMC@NLO](https://launchpad.net/mg5amcnlo). MG5 is a framework for calculating theoretical results of particle collisions. For more information on MG5, see my [setup guide (work-in-progress)](https://github.com/chrisleefoster/MadGraph5-setup).
+
+This work is adapted from scripts made for producing the NLO/LO cross sections and distributions seen in [this paper](https://arxiv.org/abs/2312.00861). Below is a flow chart of the workflow.
 
 ![Workflow flowchart](images/mg5-flowchart.png)
 
-See my [setup guide (work-in-progress)](https://github.com/chrisleefoster/MadGraph5-setup) for installation, tutorial, and directory setup. This guide assumes you are using the setup described there.
-
-
 ## Creating Data
-Once mg5 is installed and setup, you can start simulating particle collisions. 
+With MG5 installed and setup, you can start simulating particle collisions. First, you can start by adding simulations to `/sims/` by running `./createSim.sh`.
 
 ### createSim.sh
-Running `ttbarW.sh`(soon to be createSim.sh) will copy the sim directory in `sim.tar.gz` and rename it to ttbarW-date-number, where date is today's date in YYYY_MM_DD and number increases for each sim created on the same day. 
+Running `createSim.sh` will copy the sim directory in `sim.tar.gz` and rename it to ttbarW-date-number, where date is today's date in YYYY_MM_DD and number increases for each sim created on the same day. 
 
 The sim directory contains 5 files:   
 - `generate.sh`
