@@ -1,8 +1,8 @@
-import model var_model
-generate var_initial_state > var_final_state var_qcd_qed
+import model sm
+generate p p > t t~ [QCD]
 output var_output_file
 launch
-order=var_order
+order=LO
 fixed_order=ON
 set MT 1.725000e+02
 set pdlabel lhapdf
