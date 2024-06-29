@@ -17,10 +17,10 @@ The sim directory contains 5 files:
 - `generate.sh`
 - `generate_eW.sh`
 - `run.sh`
-- `analysis_HwU_distributions.f`
+- `analysis_HwU_top-distributions.f`
 - `job`
 
-Currently, the createTemplate method is recommended for beginners not familiar with all MG5 options. To get a full understanding of all available options it is recommended `./bin/mg5_aMC`
+Currently, the createTemplate method is recommended for beginners not familiar with all of MG5 options. To get a full understanding of all available options it is recommended to run MG5's shell with `./bin/mg5_aMC`
 
 ### Generation scripts
 After creating the new sim folder, you can start a simulation by running `path/to/mg5/bin/mg5_aMC generate.sh`. If we want to include electroweak corrections we run `path/to/mg5/bin/mg5_aMC generate_eW.sh`.
