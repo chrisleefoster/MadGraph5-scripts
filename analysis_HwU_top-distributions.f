@@ -1,5 +1,5 @@
 c
-c Example analysis for "p p > t t~ a [QCD]" process. Melnikov (1102.1967) variables and binning. Modified by Alberto
+c Example analysis for "p p > t t~ a [QCD]" process. Melnikov (1102.1967) variables and binning. Modified by Alberto, further modified by Chris
 c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       subroutine analysis_begin(nwgt,weights_info)
@@ -7,26 +7,19 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       implicit none
       integer nwgt
       character*(*) weights_info(*)
-      integer i,kk,l
+      integer i,l
       character*5 cc(2)
       data cc/'     ','cuts '/
       double precision pi
       PARAMETER (PI=3.14159265358979312D0)
       call HwU_inithist(nwgt,weights_info)
       do i=1,2
-        l=(i-1)*7
-        call HwU_book(l+ 1,'t pt          '//cc(i),100,0.d0,500.d0)
-c        call HwU_book(l+ 2,'tb pt         '//cc(i),100,0.d0,500.d0)
-        call HwU_book(l+ 2,'y_t               '//cc(i),50,-5.d0,5.d0)
-c        call HwU_book(l+ 4,'y_tb              '//cc(i),50,-5.d0,5.d0)
-c        call HwU_book(l+ 5,'tt inv m          '//cc(i),170,300.d0,500.d0)
-c        call HwU_book(l+ 6,'a pt          '//cc(i),100,0.d0,500.d0)
-c        call HwU_book(l+ 7,'y_a              '//cc(i),50,-5.d0,5.d0)
+        l=(i-1)*2
+        call HwU_book(l+ 1,'t pt          '//cc(i),100, 0.d0,500.d0)
+        call HwU_book(l+ 2,'y_t           '//cc(i), 50,-5.d0,  5.d0)
       enddo
       return
       end
-
-
 
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       subroutine analysis_end(dummy)
@@ -48,45 +41,37 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       double precision p(0:4,nexternal)
       double precision wgts(*)
       integer ibody
-      double precision wgt,var
-      integer i,kk,l,jj
+      integer i,l,jj
       integer ntop,ntopb,na
-      double precision www,xptq(0:3),xptb(0:3),yptqtb(0:3),xpa(0:3),ycut,ptcut
-     $     ,ptq1,ptq2,pta,ptg,yq1,yq2,ya,etaq1,etaq2,azi,azinorm,qqm,dr,yqq
+      double precision xptq(0:3),xptb(0:3),yptqtb(0:3),xpa(0:3),ycut,ptcut,ptq1,ptq2,yq1,yq2
       logical siq1flag,siq2flag,ddflag
-      double precision getrapidity,getpseudorap,getinvm,getdelphi
-      external getrapidity,getpseudorap,getinvm,getdelphi
+      double precision getrapidity
+      external getrapidity
       double precision pi
       PARAMETER (PI=3.14159265358979312D0)
       if (nexternal.ne.5) then
          write (*,*) 'error #1 in analysis_fill: '/
      &        /'only for process "p p > t t~ [QCD]"'
-C         stop 1
       endif
       if (.not. (abs(ipdg(1)).le.5 .or. ipdg(1).eq.21)) then
          write (*,*) 'error #2 in analysis_fill: '/
      &        /'only for process "p p > t t~ [QCD]"'
-C         stop 1
       endif
       if (.not. (abs(ipdg(2)).le.5 .or. ipdg(2).eq.21)) then
          write (*,*) 'error #3 in analysis_fill: '/
      &        /'only for process "p p > t t~ [QCD]"'
-C         stop 1
       endif
       if (.not. (abs(ipdg(5)).le.5 .or. ipdg(5).eq.21)) then
          write (*,*) 'error #4 in analysis_fill: '/
      &        /'only for process "p p > t t~ [QCD]"'
-C         stop 1
       endif
       if (ipdg(3).ne.6) then
          write (*,*) 'error #5 in analysis_fill: '/
      &        /'only for process "p p > t t~ [QCD]"'
-C         stop 1
       endif
       if (ipdg(4).ne.-6) then
          write (*,*) 'error #6 in analysis_fill: '/
      &        /'only for process "p p > t t~ [QCD]"'
-C         stop 1
       endif
 c
 C IDENTIFY THE FINAL TOP AND ANTITOP MOMENTUM
@@ -121,22 +106,12 @@ C DEFINE SUM OF TOP AND ANTITOP MOMENTUM
 C FILL THE HISTOS
       YCUT=2.5D0
       PTCUT=30.D0
-C
+
       ptq1 = dsqrt(xptq(1)**2+xptq(2)**2)
       ptq2 = dsqrt(xptb(1)**2+xptb(2)**2)
-      pta = dsqrt(xpa(1)**2+xpa(2)**2)
-      ptg = dsqrt(yptqtb(1)**2+yptqtb(2)**2)
       yq1=getrapidity(xptq(0),xptq(3))
       yq2=getrapidity(xptb(0),xptb(3))
-      ya=getrapidity(xpa(0),xpa(3))
-      etaq1=getpseudorap(xptq(0),xptq(1),xptq(2),xptq(3))
-      etaq2=getpseudorap(xptb(0),xptb(1),xptb(2),xptb(3))
-C     etaa=getpseudorap(xpa(0),xpa(1),xpa(2),xpa(3))
-      azi=getdelphi(xptq(1),xptq(2),xptb(1),xptb(2))
-      azinorm = (pi-azi)/pi
-      qqm=getinvm(yptqtb(0),yptqtb(1),yptqtb(2),yptqtb(3))
-      dr  = dsqrt(azi**2+(etaq1-etaq2)**2)
-      yqq=getrapidity(yptqtb(0),yptqtb(3))
+
 c-------------------------------------------------------------
       siq1flag=ptq1.gt.ptcut.and.abs(yq1).lt.ycut
       siq2flag=ptq2.gt.ptcut.and.abs(yq2).lt.ycut
@@ -144,26 +119,15 @@ c-------------------------------------------------------------
 c-------------------------------------------------------------
       l=0
       if(ptq1.gt.20) call HwU_fill(l+1,ptq1,WGTS)
-c      if(ptq1.gt.20) call HwU_fill(l+2,ptq2,WGTS)
       if(ptq1.gt.20) call HwU_fill(l+2,yq1,WGTS)
-c      if(ptq1.gt.20) call HwU_fill(l+4,yq2,WGTS)
-c      if(pta.gt.20) call HwU_fill(l+5,qqm,WGTS)
-c      if(pta.gt.20) call HwU_fill(l+6,pta,WGTS)
-c      if(pta.gt.20) call HwU_fill(l+7,ya,WGTS)
-
 c
 c***************************************************** with cuts
 c
-      l=l+7
-c
+      l=l+2
+
       if(ddflag)then
          if(ptq1.gt.20) call HwU_fill(l+1,ptq1,WGTS)
-c         if(ptq1.gt.20) call HwU_fill(l+2,ptq2,WGTS)
          if(ptq1.gt.20) call HwU_fill(l+2,yq1,WGTS)
-c         if(ptq1.gt.20) call HwU_fill(l+4,yq2,WGTS)
-c         if(pta.gt.20) call HwU_fill(l+5,qqm,WGTS)
-c         if(pta.gt.20) call HwU_fill(l+6,pta,WGTS)
-c         if(pta.gt.20) call HwU_fill(l+7,ya,WGTS)
       endif
  999  return      
       end
@@ -190,62 +154,3 @@ c         if(pta.gt.20) call HwU_fill(l+7,ya,WGTS)
       end
 
 
-      function getpseudorap(en,ptx,pty,pl)
-      implicit none
-      real*8 getpseudorap,en,ptx,pty,pl,tiny,pt,eta,th
-      parameter (tiny=1.d-5)
-c
-      pt=sqrt(ptx**2+pty**2)
-      if(pt.lt.tiny.and.abs(pl).lt.tiny)then
-        eta=sign(1.d0,pl)*1.d8
-      else
-        th=atan2(pt,pl)
-        eta=-log(tan(th/2.d0))
-      endif
-      getpseudorap=eta
-      return
-      end
-
-
-      function getinvm(en,ptx,pty,pl)
-      implicit none
-      real*8 getinvm,en,ptx,pty,pl,tiny,tmp
-      parameter (tiny=1.d-5)
-c
-      tmp=en**2-ptx**2-pty**2-pl**2
-      if(tmp.gt.0.d0)then
-        tmp=sqrt(tmp)
-      elseif(tmp.gt.-tiny)then
-        tmp=0.d0
-      else
-        write(*,*)'Attempt to compute a negative mass'
-        stop
-      endif
-      getinvm=tmp
-      return
-      end
-
-
-      function getdelphi(ptx1,pty1,ptx2,pty2)
-      implicit none
-      real*8 getdelphi,ptx1,pty1,ptx2,pty2,tiny,pt1,pt2,tmp
-      parameter (tiny=1.d-5)
-c
-      pt1=sqrt(ptx1**2+pty1**2)
-      pt2=sqrt(ptx2**2+pty2**2)
-      if(pt1.ne.0.d0.and.pt2.ne.0.d0)then
-        tmp=ptx1*ptx2+pty1*pty2
-        tmp=tmp/(pt1*pt2)
-        if(abs(tmp).gt.1.d0+tiny)then
-          write(*,*)'Cosine larger than 1'
-          stop
-        elseif(abs(tmp).ge.1.d0)then
-          tmp=sign(1.d0,tmp)
-        endif
-        tmp=acos(tmp)
-      else
-        tmp=1.d8
-      endif
-      getdelphi=tmp
-      return
-      end
