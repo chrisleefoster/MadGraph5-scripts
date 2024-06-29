@@ -11,7 +11,7 @@ MadGraph5 scripts provides methods of producing directories corresponding to par
 With MG5 installed and setup, you can start simulating particle collisions. You can start by adding simulations to `/sims/` by running `./createSim.sh`.
 
 ### createSim.sh
-`createSim.sh` allows you select from available templates or create your own. The templates work by making a copy of `source.tar.gz` and editing the variables in the source files.  
+`createSim.sh` allows you select from available templates or create your own. The templates function by making a copy of `source.tar.gz` and editing variables in the source files.  
 
 The sim directory contains 5 files:   
 - `generate.sh`
@@ -20,7 +20,9 @@ The sim directory contains 5 files:
 - `analysis_HwU_distributions.f`
 - `job`
 
-### generation scripts
+Currently, the createTemplate method is recommended for beginners not familiar with all MG5 options. To get a full understanding of all available options it is recommended `./bin/mg5_aMC`
+
+### Generation scripts
 After creating the new sim folder, you can start a simulation by running `path/to/mg5/bin/mg5_aMC generate.sh`. If we want to include electroweak corrections we run `path/to/mg5/bin/mg5_aMC generate_eW.sh`.
 
 #### HPC job
