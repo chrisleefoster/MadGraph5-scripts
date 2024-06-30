@@ -1,5 +1,5 @@
 #!/bin/bash
-tar xf sim.tar.gz
+tar xf ttbarW.tar.gz
 mv sim ../sims/
 cd ../sims/
 today=$(date +"%y_%m_%d")
